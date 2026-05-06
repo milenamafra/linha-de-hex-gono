@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hexágono Gangorra - Equilíbrio Ativo</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Barra de equilíbrio */
+        .linha {
+            width: 500px;
+            height: 10px;
+            background-color: white;
+            position: relative;
+            /* A barra inclina: quando o hexágono está na esquerda (0%), ela está -15deg (esquerda alta) */
+            /* Quando o hexágono está na direita (100%), ela está 15deg (direita alta) */
+            animation: balancarSincronizado 1.5s ease-in-out infinite alternate;
+        }
+
+        /* O Hexágono */
+        .hexagono {
+            width: 70px;
+            height: 60.62px;
+            background-color: white;
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+
+            position: absolute;
+            bottom: 10px;
+            /* Sobre a barra */
+            left: 0;
+
+            /* Rola sincronizado com o balanço da barra */
+            animation: rolarSubindo 1.5s ease-in-out infinite alternate;
+            transform-origin: center center;
+        }
+
+        /* ANIMAÇÃO DA BARRA: Sincronizada para subir onde o hexágono está */
+        @keyframes balancarSincronizado {
+            from {
+                /* Hexágono na esquerda -> Ponta esquerda sobe */
+                transform: rotate(15deg);
+            }
+
+            to {
+                /* Hexágono na direita -> Ponta direita sobe */
+                transform: rotate(-15deg);
+            }
+        }
+
+        /* ANIMAÇÃO DO HEXÁGONO: Rola para a ponta que está subindo */
+        @keyframes rolarSubindo {
+            0% {
+                left: 0%;
+                /* Compensação para parecer reto na subida da esquerda */
+                transform: rotate(-15deg);
+            }
+
+            100% {
+                left: calc(100% - 70px);
+                /* 720 graus (2 voltas) + compensação da inclinação da direita */
+                transform: rotate(735deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="linha">
+        <div class="hexagono"></div>
+    </div>
+
+</body>
+
+</html>
